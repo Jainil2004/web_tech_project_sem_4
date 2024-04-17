@@ -1,0 +1,466 @@
+<!-- <!DOCTYPE html>
+<html>
+<head>
+<style>
+.option-box {
+  width: 100px;
+  height: 100px;
+  margin: 10px;
+  border: 1px solid black;
+  display: inline-block;
+  text-align: center;
+  line-height: 50px;
+  cursor: pointer;
+}
+
+.option-box.selected {
+  background-color: #ddd;
+}
+
+.status-box {
+  width: 80px;
+  height: 30px;
+  margin: auto;
+  border: 1px solid black;
+  text-align: center;
+  line-height: 30px;
+}
+</style>
+<script>
+window.onload = function() {
+  var boxes = document.getElementsByClassName('option-box');
+  for (var i = 0; i < boxes.length; i++) {
+    boxes[i].addEventListener('click', function() {
+      var siblings = this.parentNode.getElementsByClassName('option-box');
+      for (var j = 0; j < siblings.length; j++) {
+        if (siblings[j].classList.contains('selected')) {
+          siblings[j].classList.remove('selected');
+          siblings[j].getElementsByClassName('status-box')[0].innerText = 'Select';
+          document.getElementById(siblings[j].getAttribute('data-input')).value = 'false';
+        }
+      }
+      this.classList.add('selected');
+      this.getElementsByClassName('status-box')[0].innerText = 'Selected';
+      document.getElementById(this.getAttribute('data-input')).value = 'true';
+    });
+  }
+};
+</script>
+</head>
+<body>
+
+<form action="/submit_form">
+  <div id="cpu">
+    <h2>CPU</h2>
+    <div class="option-box" data-input="option1">
+      Option 1
+      <div class="status-box">Select</div>
+    </div>
+    <input type="hidden" id="option1" name="option1" value="false">
+
+    <div class="option-box" data-input="option2">
+      Option 2
+      <div class="status-box">Select</div>
+    </div>
+    <input type="hidden" id="option2" name="option2" value="false">
+  </div>
+
+  <div id="gpu">
+    <h2>GPU</h2>
+    <div class="option-box" data-input="option3">
+      Option 3
+      <div class="status-box">Select</div>
+    </div>
+    <input type="hidden" id="option3" name="option3" value="false">
+
+    <div class="option-box" data-input="option4">
+      Option 4
+      <div class="status-box">Select</div>
+    </div>
+    <input type="hidden" id="option4" name="option4" value="false">
+  </div>
+
+  <input type="submit" value="Submit">
+</form>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+        <style>
+            /* .row div{
+        width: 30%;
+        margin: auto;
+        height: 30%;
+        justify-content: space-between;
+    } */
+            .option-box {
+                width: 20%;
+                height: 40%;
+                margin: 10px;
+                border: 1px solid black;
+                display: inline-block;
+                text-align: center;
+                line-height: 50px;
+                cursor: pointer;
+            }
+
+            .option-box.selected {
+                background-color: #ddd;
+            }
+
+            .status-box {
+                width: 20%;
+                height: 20%;
+                margin: auto;
+                border: 1px solid black;
+                text-align: center;
+                line-height: 30px;
+            }
+
+            .option-box.disabled {
+                pointer-events: none;
+                opacity: 0.6;
+            }
+
+            .option-box {
+                width: 20%; /* Adjust width as needed */
+                height: 35%;
+                margin: 10px;
+                border: 1px solid black;
+                display: inline-block;
+                /* flex-direction: co */
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                cursor: pointer;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+
+            .option-box p {
+                flex-grow: 1;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 110%;
+            }
+
+            .options-container {
+                display: flex;
+                /* justify-content: space-between; */
+            }
+
+            .option-box {
+                width: 20%; /* Adjust width as needed */
+                height: 35%;
+                margin: 10px;
+                border: 1px solid black;
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                cursor: pointer;
+                padding: 10px;
+                box-sizing: border-box;
+            }
+        </style>
+    </head>
+    <body ng-app="myApp" ng-controller="myCtrl">
+        <form action="/submit_form">
+            <h2>Courses We Offer</h2>
+            <p>lorem ipsum dolor sit amet. consectetur adipiscing elit.</p>
+
+            <h2>CPU</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': cpuOption === 'option1'}"
+                    ng-click="selectCpuOption('option1')"
+                >
+                    <p>
+                        14th Generation Intel® Core™ i7-14650HX
+                        Processor(E-cores up to 3.70 GHz P-cores up to 5.20 GHz)
+                    </p>
+                    <div class="status-box">
+                        {{ cpuOption === 'option1' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': cpuOption === 'option2'}"
+                    ng-click="selectCpuOption('option2')"
+                >
+                    <p>
+                        14th Generation Intel® Core™ i7-14700HX
+                        Processor(E-cores up to 3.90 GHz P-cores up to 5.50 GHz)
+                    </p>
+                    <div class="status-box">
+                        {{ cpuOption === 'option2' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': cpuOption === 'option3'}"
+                    ng-click="selectCpuOption('option3')"
+                >
+                    <p>
+                        14th Generation Intel® Core™ i9-14900HX
+                        Processor(E-cores up to 4.10 GHz P-cores up to 5.80 GHz)
+                    </p>
+                    <div class="status-box">
+                        {{ cpuOption === 'option3' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>Memory</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': memoryOption === 'option1', 'disabled': cpuOption === 'option3'}"
+                    ng-click="cpuOption !== 'option3' && selectMemoryOption('option1')"
+                >
+                    <p>16 GB DDR5-5600MHz (SODIMM)</p>
+                    <div class="status-box">
+                        {{ memoryOption === 'option1' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': memoryOption === 'option2', 'disabled' : cpuOption === 'option1'}"
+                    ng-click="cpuOption !== 'option1' && selectMemoryOption('option2')"
+                >
+                    <p>32 GB DDR5-5600MHz - (2 x 16 GB)</p>
+                    <div class="status-box">
+                        {{ memoryOption === 'option2' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>First Solid State Drive</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': ssdOption === 'option1'}"
+                    ng-click="selectSsdOption('option1')"
+                >
+                    <p>512 GB SSD M.2 2280 PCIe Gen4 TLC</p>
+                    <div class="status-box">
+                        {{ ssdOption === 'option1' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': ssdOption === 'option2'}"
+                    ng-click="selectSsdOption('option2')"
+                >
+                    <p>1 TB SSD M.2 2280 PCIe Gen4 TLC</p>
+                    <div class="status-box">
+                        {{ ssdOption === 'option2' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>Display</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': displayOption === 'option1'}"
+                    ng-click="selectDisplayOption('option1')"
+                >
+                    <p>
+                        40.64cms (16) WQXGA (2560 x 1600), IPS, Anti-Glare,
+                        Non-Touch, HDR 400, 100%DCI-P3, 500 nits, 240Hz, Low
+                        Blue Light
+                    </p>
+                    <div class="status-box">
+                        {{ displayOption === 'option1' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': displayOption === 'option2'}"
+                    ng-click="selectDisplayOption('option2')"
+                >
+                    <p>
+                        40.64cms (16) WQXGA (2560 x 1600), IPS, Anti-Glare,
+                        Non-Touch, HDR 400, 100%sRGB, 500 nits, 240Hz, Narrow
+                        Bezel, Low Blue Light
+                    </p>
+                    <div class="status-box">
+                        {{ displayOption === 'option2' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>Graphics card</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': gpuOption === 'option1'}"
+                    ng-click="selectGpuOption('option1')"
+                >
+                    <p>NVIDIA® GeForce RTX™ 4060 Laptop GPU 8GB GDDR6</p>
+                    <div class="status-box">
+                        {{ gpuOption === 'option1' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': gpuOption === 'option2', 'disabled' : cpuOption === 'option1'}"
+                    ng-click=" cpuOption !== 'option1' && selectGpuOption('option2')"
+                >
+                    <p>NVIDIA® GeForce RTX™ 4070 Laptop GPU 8GB GDDR6</p>
+                    <div class="status-box">
+                        {{ gpuOption === 'option2' ? 'Selected' : 'Select' }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>Keyboard</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': keyboardOption === 'option1'}"
+                    ng-click="selectKeyboardOption('option1')"
+                >
+                    <p>White Backlit, Black - English</p>
+                    <div class="status-box">
+                        {{ keyboardOption === 'option1' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+
+                <div
+                    class="option-box"
+                    ng-class="{'selected': keyboardOption === 'option2'}"
+                    ng-click="selectKeyboardOption('option2')"
+                >
+                    <p>4 Zone RGB Backlit, Black - English</p>
+                    <div class="status-box">
+                        {{ keyboardOption === 'option2' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+            </div>
+
+            <h2>Warranty</h2>
+            <div class="options-container">
+                <div
+                    class="option-box"
+                    ng-class="{'selected': warrantyOption === 'option1'}"
+                    ng-click="selectWarrantyOption('option1')"
+                >
+                    <p>
+                        1 Year Courier or Carry-in NO Accidental Damage
+                        Protection
+                    </p>
+                    <div class="status-box">
+                        {{ warrantyOption === 'option1' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+                <div
+                    class="option-box"
+                    ng-class="{'selected': warrantyOption === 'option2'}"
+                    ng-click="selectWarrantyOption('option2')"
+                >
+                    <p>
+                        2Y LUS + 2Y Accidental Damage Protection upgrade from 1Y
+                        LUS (Ecomm)
+                    </p>
+                    <div class="status-box">
+                        {{ warrantyOption === 'option2' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+                <div
+                    class="option-box"
+                    ng-class="{'selected': warrantyOption === 'option3'}"
+                    ng-click="selectWarrantyOption('option3')"
+                >
+                    <p>
+                        3Y LUS + 3Y Accidental Damage Protection Upgrade from 1Y
+                        LUS (Ecomm)
+                    </p>
+                    <div class="status-box">
+                        {{ warrantyOption === 'option3' ? 'Selected' : 'Select'
+                        }}
+                    </div>
+                </div>
+            </div>
+
+            <input type="submit" value="Submit" />
+        </form>
+
+        <script>
+            var app = angular.module("myApp", []);
+            app.controller("myCtrl", function ($scope) {
+                $scope.cpuOption = "";
+                $scope.osOption = "";
+                $scope.softwareOption = "";
+                $scope.memoryOption = "";
+                $scope.ssdOption = "";
+                $scope.displayOption = "";
+                $scope.gpuOption = "";
+                $scope.keyboardOption = "";
+                $scope.warrantyOption = "";
+
+                $scope.selectCpuOption = function (option) {
+                    $scope.cpuOption = option;
+                    if ($scope.cpuOption === "option3") {
+                        $scope.memoryOption = "option2";
+                        $scope.gpuOption = "option2";
+                    } else if ($scope.cpuOption !== "option3") {
+                        $scope.memoryOption = "option1";
+                        $scope.gpuOption = "option1";
+                    }
+                };
+
+                $scope.selectOsOption = function (option) {
+                    $scope.osOption = option;
+                };
+
+                $scope.selectSoftwareOption = function (option) {
+                    $scope.softwareOption = option;
+                };
+
+                $scope.selectMemoryOption = function (option) {
+                    $scope.memoryOption = option;
+                };
+
+                $scope.selectSsdOption = function (option) {
+                    $scope.ssdOption = option;
+                };
+
+                $scope.selectDisplayOption = function (option) {
+                    $scope.displayOption = option;
+                };
+
+                $scope.selectGpuOption = function (option) {
+                    $scope.gpuOption = option;
+                };
+
+                $scope.selectKeyboardOption = function (option) {
+                    $scope.keyboardOption = option;
+                };
+
+                $scope.selectWarrantyOption = function (option) {
+                    $scope.warrantyOption = option;
+                };
+            });
+        </script>
+    </body>
+</html>
